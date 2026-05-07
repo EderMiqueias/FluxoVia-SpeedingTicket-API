@@ -31,4 +31,5 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     TicketsModule,
   ],
 })
+
 export class AppModule { }

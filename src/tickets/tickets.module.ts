@@ -9,4 +9,5 @@ import { Ticket } from './ticket.entity';
   controllers: [TicketsController],
   providers: [TicketsService],
 })
+
 export class TicketsModule {}
