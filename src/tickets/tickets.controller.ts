@@ -20,25 +20,10 @@ interface AuthenticatedRequest extends Request {
 export class TicketsController {
   constructor(private readonly ticketsService: TicketsService) {}
 
-  /**
-   * POST /tickets — protected route (JWT required in Authorization header).
-   * Receives the speeding-ticket payload and persists it to the database.
-   * The authenticated user's id is extracted from the JWT via Passport.
-   */
   @UseGuards(JwtAuthGuard)
   @Post('tickets')
   @HttpCode(HttpStatus.CREATED)
-  createTicket(@Body() dto: CreateTicketDto, @Request() req: AuthenticatedRequest) {
-    return this.ticketsService.create(dto, req.user.userId);
-  }
-
-  /**
-   * POST /multas — alias for POST /tickets (same behaviour).
-   */
-  @UseGuards(JwtAuthGuard)
-  @Post('multas')
-  @HttpCode(HttpStatus.CREATED)
   createMulta(@Body() dto: CreateTicketDto, @Request() req: AuthenticatedRequest) {
-    return this.ticketsService.create(dto, req.user.userId);
+    this.ticketsService.create(dto, req.user.userId);
   }
 }
