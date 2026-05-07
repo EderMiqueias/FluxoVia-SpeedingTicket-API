@@ -2,11 +2,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
-  ManyToOne,
-  JoinColumn,
+  CreateDateColumn
 } from 'typeorm';
-import { User } from '../users/user.entity';
 
 @Entity('tickets')
 export class Ticket {
@@ -30,9 +27,8 @@ export class Ticket {
   id_aparelho_medidor: string;
 
   /** The user (operator) who recorded this ticket */
-  @ManyToOne(() => User, (user) => user.tickets, { onDelete: 'SET NULL', nullable: true })
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @Column({ length: 20 })
+  user: string;
 
   @CreateDateColumn()
   createdAt: Date;
