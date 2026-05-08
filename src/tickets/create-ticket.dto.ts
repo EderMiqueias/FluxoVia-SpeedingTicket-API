@@ -1,9 +1,17 @@
-import { IsString, IsNumber, IsPositive, MinLength } from 'class-validator';
+import { IsString, IsNumber, IsPositive, MinLength, Length } from 'class-validator';
 
 export class CreateTicketDto {
   @IsString()
   @MinLength(1)
+  proprietario: string;
+
+  @IsString()
+  @MinLength(1)
   placa: string;
+
+  @IsString()
+  @Length(2, 2)
+  uf: string;
 
   @IsNumber()
   @IsPositive()
