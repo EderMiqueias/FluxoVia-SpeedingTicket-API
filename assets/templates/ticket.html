@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* Configurações de página para A4 */
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 18pt;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            margin: 5px 0;
+            font-size: 10pt;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+
+        .section-title {
+            background-color: #eee;
+            margin: -15px -15px 15px -15px;
+            padding: 5px 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 10pt;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .field {
+            margin-bottom: 8px;
+        }
+
+        .label {
+            font-size: 8pt;
+            color: #666;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .value {
+            font-size: 11pt;
+            font-weight: bold;
+        }
+
+        .infraction-box {
+            background-color: #fff4f4;
+            border: 1px solid #ebcccc;
+            padding: 15px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .price-tag {
+            font-size: 20pt;
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 8pt;
+            text-align: center;
+            color: #999;
+        }
+
+        .barcode {
+            margin-top: 30px;
+            height: 50px;
+            background-color: #000;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>FluxoVia - Sistema de Monitoramento</h1>
+        <p>Notificação de Autuação de Infração de Trânsito</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Dados do Proprietário</div>
+        <div class="field">
+            <span class="label">Nome do Proprietário</span>
+            <span class="value">{{proprietario}}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Dados do Veículo</div>
+        <div class="grid">
+            <div class="field">
+                <span class="label">Placa</span>
+                <span class="value">{{placa}}</span>
+            </div>
+            <div class="field">
+                <span class="label">UF</span>
+                <span class="value">{{uf}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Dados da Infração</div>
+        <div class="grid">
+            <div class="field">
+                <span class="label">Velocidade Registrada</span>
+                <span class="value">{{velocidade_registrada}} km/h</span>
+            </div>
+            <div class="field">
+                <span class="label">Limite Permitido</span>
+                <span class="value">{{limite_permitido}} km/h</span>
+            </div>
+            <div class="field">
+                <span class="label">ID do Equipamento</span>
+                <span class="value">{{id_aparelho_medidor}}</span>
+            </div>
+            <div class="field">
+                <span class="label">Data da Emissão</span>
+                <span class="value">{{data_emissao}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="infraction-box">
+        <span class="label">Valor a Pagar</span>
+        <div class="price-tag">R$ {{valor}}</div>
+        <p style="font-size: 9pt;">{{descricao_infracao}}</p>
+    </div>
+
+    <div class="footer">
+        <p>Este é um documento gerado automaticamente pela FluxoVia-API.</p>
+        <div class="barcode"></div>
+        <p>83640000001 2 20130000000 0 00000000000 0</p>
+    </div>
+
+</body>
+</html>
