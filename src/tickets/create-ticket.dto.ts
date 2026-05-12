@@ -24,4 +24,8 @@ export class CreateTicketDto {
   @IsString()
   @MinLength(1)
   id_aparelho_medidor: string;
+
+  @IsString()
+  @MinLength(1)
+  email: string;
 }
