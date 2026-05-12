@@ -30,12 +30,10 @@ export class TicketsController {
     @Request() _req: AuthenticatedRequest,
     @Res() res: Response,
   ) {
-    const pdfBuffer = await this.ticketsService.generateTicketPdf(dto);
+    const { url, message } = await this.ticketsService.processTicket(dto);
     res.set({
-      'Content-Type': 'application/pdf',
-      'Content-Disposition': `inline; filename="multa-${dto.placa}.pdf"`,
-      'Content-Length': pdfBuffer.length,
+      'Content-Type': 'application/json',
     });
-    res.end(pdfBuffer);
+    res.end(JSON.stringify({ "pdfUrl": url, "message": message }));
   }
 }
