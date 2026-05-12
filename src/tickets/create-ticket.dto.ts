@@ -27,5 +27,5 @@ export class CreateTicketDto {
 
   @IsString()
   @MinLength(1)
-  email: string;
+  email_condutor: string;
 }

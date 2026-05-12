@@ -17,7 +17,7 @@ export class TicketsService {
     const pdfBuffer = await this.generateTicketPdf(ticketData);
     const fileName = `${ticketData.placa}_${Date.now()}.pdf`;
     const s3Url = await this.awsS3Service.uploadPdf(pdfBuffer, fileName);
-    await this.emailService.sendTicketEmail(ticketData.email, pdfBuffer, fileName);
+    await this.emailService.sendTicketEmail(ticketData.email_condutor, pdfBuffer, fileName);
 
     return {
       message: 'Multa processada, salva na AWS e enviada por e-mail com sucesso!',
