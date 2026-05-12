@@ -98,6 +98,48 @@ dist
 # Sveltekit cache directory
 .svelte-kit/
 
+# Terraform files (sensitive)
+# State files
+*.tfstate
+*.tfstate.*
+infra/*.tfstate
+infra/*.tfstate.*
+
+# Variable files (may contain secrets)
+*.tfvars
+*.tfvars.json
+infra/*.tfvars
+infra/*.tfvars.json
+!infra/*.tfvars.example
+
+# Terraform directories and files
+.terraform/
+.terraform.lock.hcl
+infra/.terraform/
+infra/.terraform.lock.hcl
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+infra/override.tf
+infra/override.tf.json
+
+# Terraform CLI configuration files
+.terraformrc
+terraform.rc
+
+# Environment variables
+infra/.env
+infra/.env.*
+!infra/.env.example
+infra/tfplan
+
 # vitepress build output
 **/.vitepress/dist
 
