@@ -3,9 +3,28 @@ import * as fs from 'fs';
 import * as path from 'path';
 import puppeteer from 'puppeteer';
 import { CreateTicketDto } from './create-ticket.dto';
+import { AwsS3Service } from './utils/aws-s3.service';
+import { EmailService } from './utils/email.service';
 
 @Injectable()
 export class TicketsService {
+  constructor(
+    private readonly awsS3Service: AwsS3Service,
+    private readonly emailService: EmailService,
+  ) {}
+
+  async processTicket(ticketData: CreateTicketDto) {
+    const pdfBuffer = await this.generateTicketPdf(ticketData);
+    const fileName = `${ticketData.placa}_${Date.now()}.pdf`;
+    const s3Url = await this.awsS3Service.uploadPdf(pdfBuffer, fileName);
+    await this.emailService.sendTicketEmail(ticketData.email, pdfBuffer, fileName);
+
+    return {
+      message: 'Multa processada, salva na AWS e enviada por e-mail com sucesso!',
+      url: s3Url
+    };
+  }
+
   async generateTicketPdf(dto: CreateTicketDto): Promise<Buffer> {
     const templatePath = path.join(process.cwd(), 'assets', 'templates', 'ticket.html');
     let html = fs.readFileSync(templatePath, 'utf-8');
