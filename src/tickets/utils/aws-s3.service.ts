@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 @Injectable()
 export class AwsS3Service {
@@ -18,18 +19,26 @@ export class AwsS3Service {
 
   async uploadPdf(pdfBuffer: Buffer, fileName: string): Promise<string> {
     const bucketName = process.env.AWS_S3_BUCKET_NAME;
+    const key = `tickets/${fileName}`;
 
     const command = new PutObjectCommand({
       Bucket: bucketName,
-      Key: `tickets/${fileName}`,
+      Key: key,
       Body: pdfBuffer,
       ContentType: 'application/pdf',
     });
 
     try {
       await this.s3Client.send(command);
-      // Retornamos a possível URL do arquivo (se o bucket for público) ou apenas o nome
-      return `https://${bucketName}.s3.${process.env.AWS_REGION}.amazonaws.com/tickets/${fileName}`;
+
+      const getCommand = new GetObjectCommand({
+        Bucket: bucketName,
+        Key: key,
+      });
+
+      // O link pré-assinado será válido por 24 horas.
+      const urlPreAssinada = await getSignedUrl(this.s3Client, getCommand, { expiresIn: 86400 });
+      return urlPreAssinada;
     } catch (error) {
       console.error('Erro ao fazer upload para o S3:', error);
       throw new Error('Falha ao salvar o PDF na AWS');
