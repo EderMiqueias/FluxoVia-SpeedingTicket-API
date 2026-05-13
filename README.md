@@ -33,13 +33,13 @@ A autenticação de acesso é feita via **JWT**, garantindo que apenas sistemas 
   Cliente Autenticado (Bearer JWT)
            │
            ▼
-  POST /tickets  ──────────────────────────────────┐
+  POST /tickets  ───────────────────────────────────┐
            │                                        │
            ▼                                        │
   [1] Valida o payload da infração                  │
            │                                        │
            ▼                                        │
-  [2] Renderiza o template HTML via Puppeteer        │
+  [2] Renderiza o template HTML via Puppeteer       │
       e gera o PDF (formato A4)                     │
            │                                        │
            ▼                                        │
@@ -47,11 +47,11 @@ A autenticação de acesso é feita via **JWT**, garantindo que apenas sistemas 
       e obtém a URL pública do documento            │
            │                                        │
            ▼                                        │
-  [4] Envia e-mail ao condutor via Nodemailer        │
+  [4] Envia e-mail ao condutor via Nodemailer       │
       com o PDF como anexo                          │
            │                                        │
            ▼                                        │
-  Retorna { pdfUrl, message } ◄────────────────────┘
+  Retorna { pdfUrl, message } ◄─────────────────────┘
 ```
 
 ---
