@@ -14,10 +14,10 @@ init:
 	terraform init
 
 plan:
-	terraform plan -out=$(PLAN_FILE)
+	terraform plan -var-file=env.tfvars -out=$(PLAN_FILE)
 
 apply:
-	terraform apply $(PLAN_FILE)
+	terraform apply -var-file=env.tfvars $(PLAN_FILE)
 
 destroy:
 	terraform destroy
