@@ -2,7 +2,7 @@ name: Deploy FluxoVia Ticket API
 
 on:
   push:
-    branches: [ main ] # O deploy acontece sempre que houver push na branch main
+    branches: [ master ]
 
 jobs:
   deploy:
@@ -22,7 +22,7 @@ jobs:
             cd /home/ubuntu/api
             
             # 1. Atualiza o código fonte
-            sudo git pull origin main
+            sudo git pull origin master
             
             # 2. Reconstrói a imagem Docker (isso demora um pouco devido ao Chrome)
             sudo docker build -t ticket-api .
