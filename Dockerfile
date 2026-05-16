@@ -1,7 +1,7 @@
 # ──────────────────────────────────────────────
 # Stage 1: Build
 # ──────────────────────────────────────────────
-FROM node:20-alpine AS builder
+FROM node:20 AS builder
 
 WORKDIR /app
 
@@ -21,10 +21,10 @@ FROM node:20-alpine AS production
 WORKDIR /app
 
 COPY package*.json ./
-
 RUN npm ci --omit=dev && npm cache clean --force
 
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/assets ./assets
 
 USER node
 
