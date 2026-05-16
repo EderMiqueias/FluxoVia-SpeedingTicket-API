@@ -61,3 +61,15 @@ variable "email_pass" {
   type        = string
   sensitive   = true
 }
+
+variable "jwt_secret" {
+  description = "Chave secreta para assinatura de tokens JWT"
+  type        = string
+  sensitive   = true
+}
+
+variable "jwt_expires_in" {
+  description = "Tempo de expiração do token JWT"
+  type        = string
+  default     = "30d"
+}

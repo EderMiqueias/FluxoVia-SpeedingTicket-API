@@ -42,6 +42,11 @@ resource "aws_instance" "api_server" {
   instance_type          = "t3.micro"
   vpc_security_group_ids = [aws_security_group.api_sg.id]
 
+  root_block_device {
+    volume_size = 30
+    volume_type = "gp3"
+  }
+
   user_data = <<-EOF
               #!/bin/bash
               
@@ -71,6 +76,8 @@ resource "aws_instance" "api_server" {
               EMAIL_PASS=${var.email_pass}
               EMAIL_HOST=${var.email_host}
               EMAIL_PORT=${var.email_port}
+              JWT_SECRET=${var.jwt_secret}
+              JWT_EXPIRES_IN=${var.jwt_expires_in}
               EOT
 
               # E. Constrói a imagem e roda o contêiner
