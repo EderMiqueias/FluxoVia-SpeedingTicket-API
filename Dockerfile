@@ -10,6 +10,7 @@ RUN npm install
 
 COPY . .
 RUN npm run build
+# Forcing github action
 
 # ──────────────────────────────────────────────
 # Estágio 2: Production (Execução)
