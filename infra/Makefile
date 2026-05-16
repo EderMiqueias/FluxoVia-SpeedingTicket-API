@@ -1,6 +1,7 @@
 .PHONY: init plan apply destroy clean help
 
-PLAN_FILE := tfplan
+PLAN_FILE := 
+TARGET :=
 
 help:
 	@echo "Available commands:"
@@ -20,7 +21,14 @@ apply:
 	terraform apply -var-file=env.tfvars $(PLAN_FILE)
 
 destroy:
-	terraform destroy
+	terraform destroy -var-file=env.tfvars
+
+destroy-plan:
+	terraform plan -destroy -var-file=env.tfvars -out=$(PLAN_FILE)
+	terraform apply -var-file=env.tfvars $(PLAN_FILE)
+
+destroy-target:
+	terraform destroy -var-file=env.tfvars -target=$(TARGET)
 
 clean:
 	rm -f $(PLAN_FILE)
