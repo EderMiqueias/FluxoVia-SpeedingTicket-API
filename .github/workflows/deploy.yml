@@ -1,0 +1,41 @@
+name: Deploy FluxoVia Ticket API
+
+on:
+  push:
+    branches: [ main ] # O deploy acontece sempre que houver push na branch main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/api
+            
+            # 1. Atualiza o código fonte
+            sudo git pull origin main
+            
+            # 2. Reconstrói a imagem Docker (isso demora um pouco devido ao Chrome)
+            sudo docker build -t ticket-api .
+            
+            # 3. Para o container antigo e remove
+            sudo docker rm -f api-rodando || true
+            
+            # 4. Sobe o container novo usando o .env que já está na máquina
+            sudo docker run -d \
+              -p 80:3000 \
+              --env-file .env \
+              --name api-rodando \
+              ticket-api
+            
+            # 5. Limpeza de imagens antigas para não encher o disco de 30GB
+            sudo docker image prune -f
