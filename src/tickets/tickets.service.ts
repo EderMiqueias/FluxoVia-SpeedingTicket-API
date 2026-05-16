@@ -71,8 +71,8 @@ export class TicketsService {
       await page.setContent(html, { waitUntil: 'networkidle0' });
       const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
       return Buffer.from(pdfBuffer);
-    } catch (err) {
-      throw new InternalServerErrorException('Falha ao gerar o PDF da multa.');
+    } catch (err: any) {
+      throw new InternalServerErrorException(`Falha ao gerar o PDF da multa. Erro: ${err.message}`);
     } finally {
       if (browser) {
         await browser.close();
